@@ -23,7 +23,7 @@ jobs:
     - name: Build and push frontend-vue Docker image (dev)
       run: |
         TAG=${{ github.sha }}
-        docker build -f frontend-vue/Dockerfile -t ${{ secrets.AZURE_URL }}/frontend-vue:$TAG ./frontend-vue
+        docker build -f .github/workflows/frontend-vue/Dockerfile -t ${{ secrets.AZURE_URL }}/frontend-vue:$TAG ./frontend-vue
         docker push ${{ secrets.AZURE_URL }}/frontend-vue:$TAG
 
     - name: Deploy frontend-vue to Kubernetes (dev)

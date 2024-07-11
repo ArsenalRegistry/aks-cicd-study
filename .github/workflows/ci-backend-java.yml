@@ -23,7 +23,7 @@ jobs:
     - name: Build and push backend-java Docker image (dev)
       run: |
         TAG=${{ github.sha }}
-        docker build -f backend-java/Dockerfile -t ${{ secrets.AZURE_URL }}/backend-java:$TAG ./backend-java
+        docker build -f .github/workflows/backend-java/Dockerfile -t ${{ secrets.AZURE_URL }}/backend-java:$TAG ./backend-java
         docker push ${{ secrets.AZURE_URL }}/backend-java:$TAG
 
     - name: Deploy backend-java to Kubernetes (dev)

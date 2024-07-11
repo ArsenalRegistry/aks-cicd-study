@@ -1,0 +1,33 @@
+name: CI Frontend Vue
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-push-frontend-vue-dev:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
+
+    - name: Log in to ACR
+      run: |
+        echo ${{ secrets.ACR_PASSWORD }} | docker login ${{ secrets.AZURE_URL }} -u ${{ secrets.ACR_USERNAME }} --password-stdin
+
+    - name: Build and push frontend-vue Docker image (dev)
+      run: |
+        TAG=${{ github.sha }}
+        docker build -f frontend-vue/Dockerfile -t ${{ secrets.AZURE_URL }}/frontend-vue:$TAG ./frontend-vue
+        docker push ${{ secrets.AZURE_URL }}/frontend-vue:$TAG
+
+    - name: Deploy frontend-vue to Kubernetes (dev)
+      run: |
+        TAG=${{ github.sha }}
+        sed -i 's|<registry-login-server>/frontend-vue:.*|${{ secrets.AZURE_URL }}/frontend-vue:$TAG|g' manifests/frontend-vue/base/deployment.yaml
+        kubectl apply -k manifests/frontend-vue/overlays/dev

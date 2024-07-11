@@ -23,11 +23,20 @@ jobs:
     - name: Build and push backend-java Docker image (dev)
       run: |
         TAG=${{ github.sha }}
-        docker build -f .github/workflows/backend-java/Dockerfile -t ${{ secrets.AZURE_URL }}/backend-java:$TAG ./backend-java
+        docker build -f backend-java/Dockerfile -t ${{ secrets.AZURE_URL }}/backend-java:$TAG ./backend-java
         docker push ${{ secrets.AZURE_URL }}/backend-java:$TAG
 
-    - name: Deploy backend-java to Kubernetes (dev)
+    - name: Update Kustomize Deployment with New Tag
       run: |
-        TAG=${{ github.sha }}
-        sed -i 's|eduazureregistry.azurecr.io/backend-java:.*|${{ secrets.AZURE_URL }}/backend-java:$TAG|g' manifests/backend-java/base/deployment.yaml
-        kubectl apply -k manifests/backend-java/overlays/dev
+        TAG="${{ secrets.AZURE_URL }}/backend-java:${{ github.event.inputs.name }}-${{ env.DATE_TAG }}"
+        sed -i "s|\(image: backend-java\).*|\1:$TAG|" ./manifest/backend-java/base/deployment.yaml
+
+    - name: Commit and push changes
+      run: |
+        git config --global user.name 'github-actions[bot]'
+        git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+        git add ./manifest/backend-java/base/deployment.yaml
+        git commit -m "Update backend-java-deployment.yaml with tag $TAG"
+        git push
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

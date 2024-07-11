@@ -29,5 +29,5 @@ jobs:
     - name: Deploy frontend-vue to Kubernetes (dev)
       run: |
         TAG=${{ github.sha }}
-        sed -i 's|<registry-login-server>/frontend-vue:.*|${{ secrets.AZURE_URL }}/frontend-vue:$TAG|g' manifests/frontend-vue/base/deployment.yaml
+        sed -i 's|eduazureregistry.azurecr.io/frontend-vue:.*|${{ secrets.AZURE_URL }}/frontend-vue:$TAG|g' manifests/frontend-vue/base/deployment.yaml
         kubectl apply -k manifests/frontend-vue/overlays/dev

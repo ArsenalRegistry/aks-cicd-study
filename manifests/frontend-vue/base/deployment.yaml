@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-vue
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: frontend-vue
+  template:
+    metadata:
+      labels:
+        app: frontend-vue
+    spec:
+      containers:
+      - name: frontend-vue
+        image: eduazureregistry.azurecr.io/frontend-vue:{{TAG}}
+        ports:
+        - containerPort: 80

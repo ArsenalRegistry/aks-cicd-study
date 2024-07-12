@@ -58,7 +58,9 @@ jobs:
         file: ./backend-java/Dockerfile  # Dockerfile의 위치를 정확히 지정      
         push: true        
         tags: ${{ secrets.AZURE_URL }}/backend-java:${{ github.event.inputs.name }}-${{ env.DATE_TAG }}
-
+        build-args: |
+          JAR_PATH=${{ env.JAR_PATH }}
+          
     - name: Update Kustomize Deployment with New Tag
       run: |
         TAG="${{ github.event.inputs.name }}-${{ env.DATE_TAG }}"

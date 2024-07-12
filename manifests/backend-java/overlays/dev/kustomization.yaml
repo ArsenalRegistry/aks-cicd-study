@@ -5,9 +5,9 @@ resources:
   - ../../base
 
 images:
-  - name: eduazureregistry.azurecr.io/backend-jave
+  - name: eduazureregistry.azurecr.io/backend-java
     newTag: $TAG
 
 commonLabels:
-  app: backend-jave
+  app: backend-java
   environment: dev

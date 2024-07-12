@@ -1,2 +1,13 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
 resources:
   - ../../base
+
+images:
+  - name: eduazureregistry.azurecr.io/backend-jave
+    newTag: $TAG
+
+commonLabels:
+  app: backend-jave
+  environment: prd

@@ -8,6 +8,6 @@ images:
   - name: eduazureregistry.azurecr.io/frontend-vue
     newTag: main-20240712052547
 
-labels:
+commonLabels:
   app: frontend-vue
   environment: dev

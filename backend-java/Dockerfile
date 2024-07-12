@@ -3,8 +3,8 @@ FROM openjdk:17-jdk-slim
 
 # 작업 디렉토리 설정
 WORKDIR /app
-
-# gradle 빌드 결과물을 컨테이너로 복사
+# JAR 파일 경로를 ARG로 받아서 복사
+ARG JAR_PATH
 COPY ${JAR_PATH} app.jar
 
 # 컨테이너 실행 시 실행할 명령어 설정

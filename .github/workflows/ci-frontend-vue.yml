@@ -16,8 +16,23 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v2
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '16'
+
+    - name: Install dependencies
+      working-directory: ./frontend-vue
+      run: npm install
+
+    - name: Build Vue.js application
+      working-directory: ./frontend-vue
+      run: npm run build
+
+    - name: Get current date and time
+      id: datetime
+      run: echo "DATE_TAG=$(date +'%Y%m%d%H%M%S')" >> $GITHUB_ENV
+
 
     - name: Log in to ACR
       run: |

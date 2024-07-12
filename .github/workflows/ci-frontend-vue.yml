@@ -27,7 +27,7 @@ jobs:
       uses: docker/build-push-action@v3
       with:
         context: .  # 프로젝트 루트를 기준으로 설정
-        file: ./dockerfile/frontend-vue/Dockerfile  # Dockerfile의 위치를 정확히 지정      
+        file: ./frontend-vue/Dockerfile  # Dockerfile의 위치를 정확히 지정      
         push: true
         tags: ${{ secrets.AZURE_URL }}/frontend-vue:${{ github.event.inputs.name }}-${{ env.DATE_TAG }}
 

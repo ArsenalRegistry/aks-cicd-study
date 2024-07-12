@@ -1,22 +1,11 @@
-# Use an official OpenJDK runtime as a parent image
+# 베이스 이미지 설정
 FROM openjdk:17-jdk-slim
 
-# Set the working directory in the container
+# 작업 디렉토리 설정
 WORKDIR /app
 
-# Copy the current directory contents into the container at /app
-COPY . .
+# gradle 빌드 결과물을 컨테이너로 복사
+COPY ${JAR_PATH} app.jar
 
-# Install Gradle
-RUN apt-get update && \
-    apt-get install -y wget unzip && \
-    wget https://services.gradle.org/distributions/gradle-7.3.3-bin.zip && \
-    unzip gradle-7.3.3-bin.zip -d /opt && \
-    ln -s /opt/gradle-7.3.3/bin/gradle /usr/bin/gradle && \
-    gradle -v
-
-# Build the application
-RUN gradle build
-
-# Run the application
-CMD ["java", "-jar", "build/libs/your-app.jar"]
+# 컨테이너 실행 시 실행할 명령어 설정
+ENTRYPOINT ["java", "-jar", "app.jar"]

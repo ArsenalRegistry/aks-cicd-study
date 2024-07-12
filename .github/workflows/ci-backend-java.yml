@@ -18,11 +18,13 @@ jobs:
       run: |
         echo ${{ secrets.ACR_PASSWORD }} | docker login ${{ secrets.AZURE_URL }} -u ${{ secrets.ACR_USERNAME }} --password-stdin
 
-    - name: Build and push backend-java Docker image (dev)
-      run: |
-        TAG=${{ github.sha }}
-        docker build -f backend-java/Dockerfile -t ${{ secrets.AZURE_URL }}/backend-java:$TAG ./backend-java
-        docker push ${{ secrets.AZURE_URL }}/backend-java:$TAG
+    - name: Build and Push Docker image
+      uses: docker/build-push-action@v2
+      with:
+        context: ./dockerfile/backend-java/Dockerfile
+        file: Dockerfile
+        push: true
+        tags: ${{ secrets.AZURE_URL }}/backend-java:${{ github.event.inputs.name }}-${{ env.DATE_TAG }}
 
     - name: Update Kustomize Deployment with New Tag
       run: |

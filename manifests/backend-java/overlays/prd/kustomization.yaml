@@ -8,6 +8,6 @@ images:
   - name: eduazureregistry.azurecr.io/backend-java
     newTag: $TAG
 
-commonLabels:
+labels:
   app: backend-java
   environment: prd

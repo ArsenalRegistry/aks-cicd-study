@@ -8,7 +8,7 @@ images:
   - name: eduazureregistry.azurecr.io/frontend-vue
     newTag: {{TAG}}
 
-commonLabels:
+labels:
   app: frontend-vue
   environment: dev
 

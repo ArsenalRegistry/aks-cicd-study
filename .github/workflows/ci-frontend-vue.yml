@@ -2,6 +2,11 @@ name: CI Frontend Vue
 
 on:
   workflow_dispatch:
+    inputs:
+      name:
+        description: "Docker TAG"
+        required: true
+        default: "main"
 
 jobs:
   build-and-push-frontend-vue-dev:

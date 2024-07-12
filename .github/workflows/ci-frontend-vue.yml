@@ -49,7 +49,7 @@ jobs:
     - name: Update Kustomize Deployment with New Tag
       run: |
         TAG="${{ secrets.AZURE_URL }}/frontend-vue:${{ github.event.inputs.name }}-${{ env.DATE_TAG }}"
-        sed -i "s|\(image: frontend-vue\).*|\1:$TAG|" ./manifests/frontend-vue/base/deployment.yaml
+        sed -i 's|newTag: .*|newTag: $TAG|g' manifests/frontend-vue/overlays/dev/kustomization.yaml
 
     - name: Commit and push changes
       run: |

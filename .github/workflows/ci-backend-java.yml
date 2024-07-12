@@ -55,22 +55,22 @@ jobs:
       uses: docker/build-push-action@v3
       with:
         context: .  # 프로젝트 루트를 기준으로 설정
-        file: ./backend-java/Dockerfile  # Dockerfile의 위치를 정확히 지정      
+        file: ./gitops/backend-java/Dockerfile  # Dockerfile의 위치를 정확히 지정      
         push: true        
         tags: ${{ secrets.AZURE_URL }}/backend-java:${{ github.event.inputs.name }}-${{ env.DATE_TAG }}
         build-args: |
           JAR_PATH=${{ env.JAR_PATH }}
-          
+
     - name: Update Kustomize Deployment with New Tag
       run: |
         TAG="${{ github.event.inputs.name }}-${{ env.DATE_TAG }}"
-        sed -i "s|newTag: .*$|newTag: $TAG|g" manifests/backend-java/overlays/dev/kustomization.yaml
+        sed -i "s|newTag: .*$|newTag: $TAG|g" gitops/backend-java/overlays/dev/kustomization.yaml
 
     - name: Commit and push changes
       run: |
         git config --global user.name 'github-actions[bot]'
         git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-        git add ./manifests/backend-java/overlays/dev/kustomization.yaml
+        git add ./gitops/backend-java/overlays/dev/kustomization.yaml
         git commit -m "Update backend-java-deployment.yaml with tag $TAG"
         git push
       env:

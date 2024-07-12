@@ -42,20 +42,20 @@ jobs:
       uses: docker/build-push-action@v3
       with:
         context: .  # 프로젝트 루트를 기준으로 설정
-        file: ./frontend-vue/Dockerfile  # Dockerfile의 위치를 정확히 지정      
+        file: ./gitops/frontend-vue/Dockerfile  # Dockerfile의 위치를 정확히 지정      
         push: true
         tags: ${{ secrets.AZURE_URL }}/frontend-vue:${{ github.event.inputs.name }}-${{ env.DATE_TAG }}
 
     - name: Update Kustomize Deployment with New Tag
       run: |
         TAG="${{ github.event.inputs.name }}-${{ env.DATE_TAG }}"
-        sed -i "s|newTag: .*$|newTag: $TAG|g" manifests/frontend-vue/overlays/dev/kustomization.yaml
+        sed -i "s|newTag: .*$|newTag: $TAG|g" gitops/frontend-vue/overlays/dev/kustomization.yaml
 
     - name: Commit and push changes
       run: |
         git config --global user.name 'github-actions[bot]'
         git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-        git add ./manifests/frontend-vue/overlays/dev/kustomization.yaml
+        git add ./gitops/frontend-vue/overlays/dev/kustomization.yaml
         git commit -m "Update frontend-vue-deployment.yaml with tag $TAG"
         git push
       env:

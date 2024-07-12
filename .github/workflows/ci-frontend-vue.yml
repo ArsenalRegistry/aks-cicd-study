@@ -49,13 +49,13 @@ jobs:
     - name: Update Kustomize Deployment with New Tag
       run: |
         TAG="${{ secrets.AZURE_URL }}/frontend-vue:${{ github.event.inputs.name }}-${{ env.DATE_TAG }}"
-        sed -i "s|\(image: frontend-vue\).*|\1:$TAG|" ./manifest/frontend-vue/base/deployment.yaml
+        sed -i "s|\(image: frontend-vue\).*|\1:$TAG|" ./manifests/frontend-vue/base/deployment.yaml
 
     - name: Commit and push changes
       run: |
         git config --global user.name 'github-actions[bot]'
         git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-        git add ./manifest/frontend-vue/base/deployment.yaml
+        git add ./manifests/frontend-vue/base/deployment.yaml
         git commit -m "Update frontend-vue-deployment.yaml with tag $TAG"
         git push
       env:

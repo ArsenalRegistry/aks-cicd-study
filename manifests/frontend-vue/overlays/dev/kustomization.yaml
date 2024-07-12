@@ -6,7 +6,7 @@ resources:
 
 images:
   - name: eduazureregistry.azurecr.io/frontend-vue
-    newTag: {{TAG}}
+    newTag: $TAG
 
 commonLabels:
   app: frontend-vue

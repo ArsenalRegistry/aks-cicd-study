@@ -61,8 +61,8 @@ jobs:
 
     - name: Update Kustomize Deployment with New Tag
       run: |
-        TAG="${{ secrets.AZURE_URL }}/backend-java:${{ github.event.inputs.name }}-${{ env.DATE_TAG }}"
-        sed -i 's|newTag: .*|newTag: $TAG|g' manifests/backend-java/overlays/dev/kustomization.yaml
+        TAG="${{ github.event.inputs.name }}-${{ env.DATE_TAG }}"
+        sed -i 's|newTag: .*$|newTag: $TAG|g' manifests/backend-java/overlays/dev/kustomization.yaml
 
     - name: Commit and push changes
       run: |

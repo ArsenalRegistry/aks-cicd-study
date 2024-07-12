@@ -1,9 +1,7 @@
 name: CI Frontend Vue
 
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
 
 jobs:
   build-and-push-frontend-vue-dev:

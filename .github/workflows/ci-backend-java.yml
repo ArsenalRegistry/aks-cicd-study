@@ -1,9 +1,7 @@
 name: CI Backend Java
 
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
 
 jobs:
   build-and-push-backend-java-dev:

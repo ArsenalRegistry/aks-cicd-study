@@ -7,6 +7,8 @@ on:
         description: "Docker TAG"
         required: true
         default: "main"
+permissions:
+  contents: write # repo write permission update
         
 jobs:
   build-and-push-backend-java-dev:

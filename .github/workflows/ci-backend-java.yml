@@ -7,6 +7,7 @@ on:
         description: "Docker TAG"
         required: true
         default: "main"
+        
 permissions:
   contents: write # repo write permission update
         

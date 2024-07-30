@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
       - name: frontend-vue
-        image: eduazureregistry.azurecr.io/frontend-vue:{{newTag}}
+        image: eduazureregistry.azurecr.io/frontend-vue:{{newTag}} # 이미지 주소 변경필요
         ports:
         - containerPort: 80

@@ -14,6 +14,6 @@ spec:
     spec:
       containers:
       - name: backend-java
-        image: eduazureregistry.azurecr.io/backend-java:{{newTag}}
+        image: eduazureregistry.azurecr.io/backend-java:{{newTag}} # 이미지 주소 변경필요
         ports:
         - containerPort: 8080

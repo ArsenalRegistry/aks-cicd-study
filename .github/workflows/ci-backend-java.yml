@@ -74,7 +74,6 @@ jobs:
         git config --global user.name 'github-actions[bot]'
         git config --global user.email 'github-actions[bot]@users.noreply.github.com'
         git add ./gitops/backend-java/overlays/dev/kustomization.yaml\
-        git add ./backend-java/gradlew
         git commit -m "Update backend-java-deployment.yaml with tag $TAG"
         git push
       env:
